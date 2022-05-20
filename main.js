@@ -80,10 +80,12 @@ const posts = [
 
 // stampo i post dentro html
 posts.forEach(element => {
+    // div class post
     const post = document.createElement("div");
     post.classList.add("post");
     domArea.append(post);
 
+    // div class post header + contenuto
     const postHeader = document.createElement("div");
     postHeader.classList.add("post__header");
     post.append(postHeader);
@@ -98,7 +100,7 @@ posts.forEach(element => {
 
     const addImg = document.createElement("img");
     addImg.classList.add("profile-pic");
-    addImg.classList.add(element.image);
+    addImg.setAttribute("src", element.image);
     postMetaIcon.append(addImg);
     
     const postMetaData = document.createElement("div");
@@ -107,7 +109,68 @@ posts.forEach(element => {
 
     const postMetaAuthor = document.createElement("div");
     postMetaAuthor.classList.add("post-meta__author");
+    postMetaAuthor.append(element.name);
     postMetaData.append(postMetaAuthor);
+
+    const postMetaTime = document.createElement("div");
+    postMetaTime.classList.add("post-meta__time");
+    postMetaAuthor.append(element.created);
+    postMetaData.append(postMetaTime);
+    // fine div class post header
+
+    // div class post text
+    const postText = document.createElement("div");
+    postText.classList.add("post__text");
+    postText.append(element.content);
+    post.append(postText);
+    // fine div class post text
+
+    // div class post image
+    const postImage = document.createElement("div");
+    postImage.classList.add("post__image");
+    postImage.append(element.media);
+    post.append(postImage);
+    // fine div class post image
+
+    // div class post footer
+    const postFooter = document.createElement("div");
+    postFooter.classList.add("post__footer");
+    post.append(postFooter);
+
+    const jsLikes = document.createElement("div");
+    jsLikes.classList.add("likes", "js-likes");
+    postFooter.append(jsLikes);
+
+    const likesCta = document.createElement("div");
+    likesCta.classList.add("likes__cta",);
+    jsLikes.append(likesCta);
+
+    const likeButton = document.createElement("a");
+    likeButton.classList.add("like-button", "js-like-button");
+    likeButton.setAttribute("href", "#");
+    likeButton.setAttribute("data-postid", "1");
+    jsLikes.append(likeButton);
+
+    const likeButtonIcon = document.createElement("i");
+    likeButtonIcon.classList.add("like-button__icon", "fas", "fa-thumbs-up");
+    likeButtonIcon.setAttribute("aria-hidde", "true");
+    likeButton.append(likeButtonIcon);
+
+    const likeButtonLabel = document.createElement("span");
+    likeButtonLabel.classList.add("like-button__label");
+    //likeButtonLabel.append(element.likes);
+    likeButton.append(likeButtonLabel);
+
+    const likeCounter = document.createElement("div");
+    likeCounter.classList.add("likes__counter");
+    jsLikes.append(likeCounter);
+
+    const likeCounter1 = document.createElement("b");
+    likeCounter1.setAttribute("id", "like-counter-1");
+    likeCounter1.setAttribute("class", "js-likes-counter");
+    likeCounter1.append(element.likes);
+    likeCounter.append(likeCounter1);
+    // fine div class post footer
 
     console.log(element);
 });

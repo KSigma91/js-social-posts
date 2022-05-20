@@ -109,26 +109,29 @@ posts.forEach(element => {
 
     const postMetaAuthor = document.createElement("div");
     postMetaAuthor.classList.add("post-meta__author");
-    postMetaAuthor.append(element.name);
+    postMetaAuthor.innerHTML = element.name;
+    //postMetaAuthor.append(element.name);
     postMetaData.append(postMetaAuthor);
 
     const postMetaTime = document.createElement("div");
     postMetaTime.classList.add("post-meta__time");
-    postMetaAuthor.append(element.created);
+    postMetaTime.innerHTML = element.created;
     postMetaData.append(postMetaTime);
     // fine div class post header
 
     // div class post text
     const postText = document.createElement("div");
     postText.classList.add("post__text");
-    postText.append(element.content);
+    postText.innerHTML = element.content;
+    //postText.append(element.content);
     post.append(postText);
     // fine div class post text
 
     // div class post image
     const postImage = document.createElement("div");
     postImage.classList.add("post__image");
-    postImage.append(element.media);
+    //postImage.append(element.media);
+    postImage.innerHTML = element.media;
     post.append(postImage);
     // fine div class post image
 
@@ -153,12 +156,12 @@ posts.forEach(element => {
 
     const likeButtonIcon = document.createElement("i");
     likeButtonIcon.classList.add("like-button__icon", "fas", "fa-thumbs-up");
-    likeButtonIcon.setAttribute("aria-hidde", "true");
+    likeButtonIcon.setAttribute("aria-hidden", "true");
     likeButton.append(likeButtonIcon);
 
     const likeButtonLabel = document.createElement("span");
     likeButtonLabel.classList.add("like-button__label");
-    //likeButtonLabel.append(element.likes);
+    likeButton.innerHTML += " Mi Piace";
     likeButton.append(likeButtonLabel);
 
     const likeCounter = document.createElement("div");
@@ -168,7 +171,7 @@ posts.forEach(element => {
     const likeCounter1 = document.createElement("b");
     likeCounter1.setAttribute("id", "like-counter-1");
     likeCounter1.setAttribute("class", "js-likes-counter");
-    likeCounter1.append(element.likes);
+    likeCounter1.innerHTML = "Piace a " + element.likes + " persone";
     likeCounter.append(likeCounter1);
     // fine div class post footer
 

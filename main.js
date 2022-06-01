@@ -18,6 +18,7 @@ Milestone 3 -
 Se clicchiamo sul tasto “Mi Piace” cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 */
 const domArea = document.getElementById("container");
+const clickLike = document.querySelector(".like-button");
 
 
 const posts = [
@@ -100,7 +101,7 @@ posts.forEach(element => {
 
     const addImg = document.createElement("img");
     addImg.classList.add("profile-pic");
-    addImg.setAttribute("src", element.image);
+    addImg.setAttribute("src", element.media);
     postMetaIcon.append(addImg);
     
     const postMetaData = document.createElement("div");
@@ -109,8 +110,7 @@ posts.forEach(element => {
 
     const postMetaAuthor = document.createElement("div");
     postMetaAuthor.classList.add("post-meta__author");
-    postMetaAuthor.innerHTML = element.name;
-    //postMetaAuthor.append(element.name);
+    postMetaAuthor.innerHTML = element.author.name;
     postMetaData.append(postMetaAuthor);
 
     const postMetaTime = document.createElement("div");
@@ -123,15 +123,15 @@ posts.forEach(element => {
     const postText = document.createElement("div");
     postText.classList.add("post__text");
     postText.innerHTML = element.content;
-    //postText.append(element.content);
     post.append(postText);
     // fine div class post text
 
     // div class post image
     const postImage = document.createElement("div");
     postImage.classList.add("post__image");
-    //postImage.append(element.media);
-    postImage.innerHTML = element.media;
+    const insertImg = document.createElement("img");
+    insertImg.setAttribute("src", element.media)
+    postImage.append(insertImg);
     post.append(postImage);
     // fine div class post image
 
@@ -178,3 +178,21 @@ posts.forEach(element => {
     console.log(element);
 });
 
+// se clicchiamo sul tasto mi piace cambia il colore e il counter like
+const myButtonLike = document.querySelectorAll(".js-like-button");
+
+myButtonLike.forEach((myButton) => {
+    myButton.addEventListener('click',
+    
+        function () {
+            myButton.classList.toggle("like-button")
+            if (myButton.classList.contains("like-button")) {
+                posts.likes++;
+            } else {
+                posts.likes--;
+            }
+            let likeCounter = document.getElementById("like-counter-1" + posts.id);
+            likeCounter.innerText += posts.likes;
+        }
+    )
+});

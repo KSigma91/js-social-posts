@@ -1,26 +1,3 @@
-/*
-Milestone 1 -
- Creiamo il nostro array di oggetti che rappresentano ciascun post. Ogni post dovrà avere le informazioni necessarie per stampare la relativa card:
-id del post, numero progressivo da 1 a n
-nome autore,
-foto autore,
-data in formato americano (mm-gg-yyyy),
-testo del post,
-immagine (non tutti i post devono avere una immagine),
-numero di likes.
-Non è necessario creare date casuali Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>)
-[qui, la base dati ve la passo, ma in caso le img che ci sono on funzionino, potete sostituirle in quel modo]
-
-Milestone 2 -
-Prendendo come riferimento il layout di esempio presente nell’html, stampiamo i post del nostro feed.
-
-Milestone 3 -
-Se clicchiamo sul tasto “Mi Piace” cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
-*/
-const domArea = document.getElementById("container");
-const clickLike = document.querySelector(".like-button");
-
-
 const posts = [
     {
         "id": 1,
@@ -81,118 +58,57 @@ const posts = [
 
 // stampo i post dentro html
 posts.forEach(element => {
-    // div class post
-    const post = document.createElement("div");
-    post.classList.add("post");
-    domArea.append(post);
-
-    // div class post header + contenuto
-    const postHeader = document.createElement("div");
-    postHeader.classList.add("post__header");
-    post.append(postHeader);
-
-    const postMeta = document.createElement("div");
-    postMeta.classList.add("post-meta");
-    postHeader.append(postMeta);
-
-    const postMetaIcon = document.createElement("div");
-    postMetaIcon.classList.add("post-meta__icon");
-    postMeta.append(postMetaIcon);
-
-    const addImg = document.createElement("img");
-    addImg.classList.add("profile-pic");
-    addImg.setAttribute("src", element.media);
-    postMetaIcon.append(addImg);
-    
-    const postMetaData = document.createElement("div");
-    postMetaData.classList.add("post-meta__data");
-    postMeta.append(postMetaData);
-
-    const postMetaAuthor = document.createElement("div");
-    postMetaAuthor.classList.add("post-meta__author");
-    postMetaAuthor.innerHTML = element.author.name;
-    postMetaData.append(postMetaAuthor);
-
-    const postMetaTime = document.createElement("div");
-    postMetaTime.classList.add("post-meta__time");
-    postMetaTime.innerHTML = element.created;
-    postMetaData.append(postMetaTime);
-    // fine div class post header
-
-    // div class post text
-    const postText = document.createElement("div");
-    postText.classList.add("post__text");
-    postText.innerHTML = element.content;
-    post.append(postText);
-    // fine div class post text
-
-    // div class post image
-    const postImage = document.createElement("div");
-    postImage.classList.add("post__image");
-    const insertImg = document.createElement("img");
-    insertImg.setAttribute("src", element.media)
-    postImage.append(insertImg);
-    post.append(postImage);
-    // fine div class post image
-
-    // div class post footer
-    const postFooter = document.createElement("div");
-    postFooter.classList.add("post__footer");
-    post.append(postFooter);
-
-    const jsLikes = document.createElement("div");
-    jsLikes.classList.add("likes", "js-likes");
-    postFooter.append(jsLikes);
-
-    const likesCta = document.createElement("div");
-    likesCta.classList.add("likes__cta",);
-    jsLikes.append(likesCta);
-
-    const likeButton = document.createElement("a");
-    likeButton.classList.add("like-button", "js-like-button");
-    likeButton.setAttribute("href", "#");
-    likeButton.setAttribute("data-postid", "1");
-    jsLikes.append(likeButton);
-
-    const likeButtonIcon = document.createElement("i");
-    likeButtonIcon.classList.add("like-button__icon", "fas", "fa-thumbs-up");
-    likeButtonIcon.setAttribute("aria-hidden", "true");
-    likeButton.append(likeButtonIcon);
-
-    const likeButtonLabel = document.createElement("span");
-    likeButtonLabel.classList.add("like-button__label");
-    likeButton.innerHTML += " Mi Piace";
-    likeButton.append(likeButtonLabel);
-
-    const likeCounter = document.createElement("div");
-    likeCounter.classList.add("likes__counter");
-    jsLikes.append(likeCounter);
-
-    const likeCounter1 = document.createElement("b");
-    likeCounter1.setAttribute("id", "like-counter-1");
-    likeCounter1.setAttribute("class", "js-likes-counter");
-    likeCounter1.innerHTML = "Piace a " + element.likes + " persone";
-    likeCounter.append(likeCounter1);
-    // fine div class post footer
-
-    console.log(element);
+    const myContainer = document.getElementById("container");
+    myContainer.innerHTML +=
+    `<div class="post">
+        <div class="post__header">
+            <div class="post-meta">                    
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">                    
+                </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${element.author.name}</div>
+                    <div class="post-meta__time">${element.created}</div>
+                </div>                    
+            </div>
+        </div>
+        <div class="post__text">${element.content}</div>
+        <div class="post__image">
+            <img src="${element.media}" alt="">
+        </div>
+        <div class="post__footer">
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element.likes}</b> persone
+                </div>
+            </div> 
+        </div>            
+    </div>
+    `
 });
 
 // se clicchiamo sul tasto mi piace cambia il colore e il counter like
-const myButtonLike = document.querySelectorAll(".js-like-button");
+const myButtonLike = document.querySelectorAll(".like-button");
 
-myButtonLike.forEach((myButton) => {
+myButtonLike.forEach((myButton, index) => {
     myButton.addEventListener('click',
-    
-        function () {
-            myButton.classList.toggle("like-button")
-            if (myButton.classList.contains("like-button")) {
-                posts.likes++;
+        function(item) {
+            // debugger;
+            item.preventDefault();
+            myButton.classList.toggle("like-button--liked")
+            if (myButton.classList.contains("like-button--liked")) {
+                posts[index].likes++;
             } else {
-                posts.likes--;
+                posts[index].likes--;
             }
-            let likeCounter = document.getElementById("like-counter-1" + posts.id);
-            likeCounter.innerText += posts.likes;
+            let counter = document.getElementById("like-counter-" + posts[index].id);
+            counter.innerText = posts[index].likes;
         }
     )
 });
